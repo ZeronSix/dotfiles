@@ -2,7 +2,7 @@
 set number
 " Enable syntax
 syntax on
-" Search while typing 
+" Search while typing
 set incsearch
 " Highlight search results
 set hlsearch
@@ -60,5 +60,42 @@ if filereadable(".vim_config")
     source .vim_config
 endif
 
-" Enable plugins
-filetype plugin on
+" Show trailing whitespaces
+set list listchars=tab:→\ ,trail:·
+" Remove trailing whitespaces at save
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Configure Vundle
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'majutsushi/tagbar'
+" Plugin 'Valloric/YouCompleteMe'
+
+" " All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Plugin configuration
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:UltiSnipsEditSplit="vertical"
+
+" BufExplorer
+nmap <F4> <Esc>:BufExplorer<cr>
+vmap <F4> <esc>:BufExplorer<cr>
+imap <F4> <esc><esc>:BufExplorer<cr>
+
+" TagBar
+nmap <F3> :TagbarToggle<CR>
