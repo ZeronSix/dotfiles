@@ -1,8 +1,10 @@
 #!/bin/bash
+# Dotfiles setup script
 
 # Make symbol links
 ln -sf ~/dotfiles/.vimrc ~/.vimrc
-ln -sf ~/dotfiles/.Xresources ~/.Xresources
 
-xrdb ~/.Xresources
+# Install Vim plugins
+vim +PluginInstall +qall
 
+~/dotfiles/gitconfig.sh
