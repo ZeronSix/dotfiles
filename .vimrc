@@ -89,6 +89,11 @@ function! BasicConfig()
     set splitright
 
     filetype plugin on
+
+    " Language-specific
+
+    " Makefile
+    autocmd FileType make set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
 endfunc
 
 function! KeyMappings()
@@ -133,4 +138,5 @@ endfunc
 
 call BasicConfig()
 call LocalConf()
+call KeyMappings()
 call ConfigurePlugins()
