@@ -1,3 +1,9 @@
+" File: /home/zeronsix/.vimrc
+" Author: Vyacheslav Zhdanovskiy <zeronsix@gmail.com>
+" Date: 15.04.2017
+" Last Modified Date: 24.07.2017
+" Last Modified By: Vyacheslav "ZeronSix" Zhdanovskiy <zeronsix@gmail.com>
+
 function! LocalConf()
     if filereadable(".vim_config")
         source .vim_config
@@ -121,16 +127,23 @@ function! ConfigurePlugins()
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-vinegar'
     Plugin 'rust-lang/rust.vim'
+    Plugin 'alpertuna/vim-header'
 
     call vundle#end()            " required
     filetype plugin indent on    " required
 
-    let g:UltiSnipsExpandTrigger = "<c-j>"
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     let g:tagbar_left = 1
+    let g:header_field_author = 'Vyacheslav "ZeronSix" Zhdanovskiy'
+    let g:header_field_author_email = 'zeronsix@gmail.com'
+    let g:header_auto_add_header = 0
+    map <F4> :AddHeader<CR>
 
-    nmap <C-b> <Esc>:BufExplorer<cr>
-    vmap <C-b> <esc>:BufExplorer<cr>
-    imap <C-b> <esc><esc>:BufExplorer<cr>
+    nmap <F3> <Esc>:BufExplorer<cr>
+    vmap <F3> <esc>:BufExplorer<cr>
+    imap <F3> <esc><esc>:BufExplorer<cr>
     nmap <C-\> :TagbarToggle<CR>
     cnoremap @ <c-r>=expand("%:h")<cr>
     nmap <silent> <Leader>of :FSHere<cr>
