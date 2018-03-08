@@ -1,155 +1,129 @@
-" File: /home/zeronsix/.vimrc
-" Author: Vyacheslav Zhdanovskiy <zeronsix@gmail.com>
-" Date: 15.04.2017
-" Last Modified Date: 24.07.2017
-" Last Modified By: Vyacheslav "ZeronSix" Zhdanovskiy <zeronsix@gmail.com>
+set nocompatible
+set termencoding=utf8
 
-function! LocalConf()
-    if filereadable(".vim_config")
-        source .vim_config
+" Spaces and tabs
+syntax enable
+set tabstop=4
+set softtabstop=4
+set expandtab
+set autoindent
+set smartindent
+
+set nowrap
+set list listchars=tab:→\ ,trail:·
+set textwidth=79
+set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P
+set laststatus=2
+
+" UI config
+set number
+set showcmd
+set cursorline
+filetype indent on
+set wildmenu
+set lazyredraw
+set showmatch
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+set mouse=a
+set mousemodel=popup
+
+" Searching
+set incsearch
+set hlsearch
+nnoremap <leader><space> :nohlsearch<CR>
+
+" Folding
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+nnoremap <space> za
+set foldmethod=indent
+
+" Movement
+nnoremap gV `[v`]
+
+" Edit vimrc/bashrc and load vimrc bindings
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>eb :vsp ~/.bashrc<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Save session
+nnoremap <leader>s :mksession<CR>
+
+" Autogroups
+augroup configgroup
+    autocmd!
+    autocmd VimEnter * highlight clear SignColumn
+    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
+                \:call <SID>StripTrailingWhitespaces()
+    autocmd FileType python setlocal commentstring=#\ %s
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter Makefile set tabstop=8
+    autocmd BufEnter Makefile set softtabstop=8
+    autocmd BufEnter Makefile set shiftwidth=8
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+augroup END
+
+" Backup
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
+
+" toggle between number and relativenumber
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
     endif
 endfunc
 
-function! BasicConfig()
-    " Show line numbers
-    set number
-    " Enable syntax
-    syntax on
+" strips trailing whitespace at the end of files. this
+" is called on buffer write in the autogroup above.
+function! <SID>StripTrailingWhitespaces()
+    " save last search & cursor position
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    let @/=_s
+    call cursor(l, c)
+endfunction
 
-    " Configure colors
-    hi LineNr guibg=bg
-    hi foldcolumn guibg=bg
-    hi vertsplit guifg=bg guibg=bg
+if filereadable(".vim_config")
+    source .vim_config
+endif
 
-    " Search settings
-    set incsearch
-    set hlsearch
-    set ignorecase
-    set smartcase
+" Plugins
+filetype off                  " required
 
-    set termencoding=utf8
-    set nocompatible
-    set ruler
-    set showcmd
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-    set foldenable
-    set foldlevel=100
-    set foldmethod=indent
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'majutsushi/tagbar'
+Plugin 'w0rp/ale'
 
-    " Disable beeps
-    set noerrorbells visualbell t_vb=
-    autocmd GUIEnter * set visualbell t_vb=
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-    " Enable mouse
-    set mouse=a
-    set mousemodel=popup
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-    " Allow to edit multiple files at once
-    set hidden
+nmap <F3> <Esc>:BufExplorer<cr>
+vmap <F3> <esc>:BufExplorer<cr>
+imap <F3> <esc><esc>:BufExplorer<cr>
 
-    " GUI config
-    if has('gui_running')
-        set ch=1
-        set mousehide
-        set background=light
-        colorscheme solarized
-        set guifont=Source Code Pro\ 13
-        set guioptions-=l
-        set guioptions-=L
-        set guioptions-=r
-        set guioptions-=R
-        set guioptions-=e
-        set guioptions-=m
-        set guioptions-=T
-    endif
-
-    set autoindent
-    set smartindent
-    set nowrap
-    set expandtab
-
-    set shiftwidth=4
-    set softtabstop=4
-    set tabstop=4
-    set expandtab
-
-    set statusline=%<%f%h%m%r\ %b\ %{&encoding}\ 0x\ \ %l,%c%V\ %P
-    set laststatus=2
-
-    set smartindent
-    set showmatch
-
-    set iskeyword=@,48-57,_,192-255
-    set backspace=indent,eol,start
-
-    set history=200
-    set wildmenu
-
-    " Show trailing whitespaces
-    set list listchars=tab:→\ ,trail:·
-    " Remove trailing whitespaces at save
-    autocmd BufWritePre * :%s/\s\+$//e
-
-    " Split management
-    set splitbelow
-    set splitright
-
-    filetype plugin on
-
-    " Language-specific
-
-    " Makefile
-    autocmd FileType make set noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
-endfunc
-
-function! KeyMappings()
-    " Open .vimrc
-    nmap <Leader>ev :e $MYVIMRC<cr>
-    " Search highlighting removal
-    nmap <Leader><space> :nohlsearch<cr>
-    " Show working directory
-    nmap <leader>f <Esc>:nohlsearch<cr>
-endfunc
-
-function! ConfigurePlugins()
-    filetype off
-
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-
-    Plugin 'VundleVim/Vundle.vim'
-    Plugin 'jlanzarotta/bufexplorer'
-    Plugin 'derekwyatt/vim-fswitch'
-    Plugin 'scrooloose/nerdcommenter'
-    Plugin 'majutsushi/tagbar'
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
-    Plugin 'tpope/vim-surround'
-    Plugin 'tpope/vim-vinegar'
-    Plugin 'rust-lang/rust.vim'
-    Plugin 'alpertuna/vim-header'
-
-    call vundle#end()            " required
-    filetype plugin indent on    " required
-
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-    let g:tagbar_left = 1
-    let g:header_field_author = 'Vyacheslav "ZeronSix" Zhdanovskiy'
-    let g:header_field_author_email = 'zeronsix@gmail.com'
-    let g:header_auto_add_header = 0
-    map <F4> :AddHeader<CR>
-
-    nmap <F3> <Esc>:BufExplorer<cr>
-    vmap <F3> <esc>:BufExplorer<cr>
-    imap <F3> <esc><esc>:BufExplorer<cr>
-    nmap <C-\> :TagbarToggle<CR>
-    cnoremap @ <c-r>=expand("%:h")<cr>
-    nmap <silent> <Leader>of :FSHere<cr>
-endfunc
-
-call BasicConfig()
-call LocalConf()
-call KeyMappings()
-call ConfigurePlugins()
+nmap <F4> :TagbarToggle<CR>
+cnoremap @ <c-r>=expand("%:h")<cr>/

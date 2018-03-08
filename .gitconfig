@@ -1,0 +1,14 @@
+[user]
+	name = Vyacheslav Zhdanovskiy
+	email = zeronsix@gmail.com
+[core]
+	autocrlf = input
+	safecrlf = true
+	editor = vim
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p

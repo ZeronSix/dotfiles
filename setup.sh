@@ -1,14 +1,10 @@
 #!/bin/bash
-# File: /home/zeronsix/dotfiles/setup.sh
-# Author: Vyacheslav "ZeronSix" Zhdanovskiy <zeronsix@gmail.com>
-# Date: 15.04.2017
-# Last Modified Date: 24.07.2017
-# Last Modified By: Vyacheslav "ZeronSix" Zhdanovskiy <zeronsix@gmail.com>
 
 # Make symbol links
 ln -sf ~/dotfiles/.vimrc ~/.vimrc
+ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
 
 # Install Vim plugins
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
-~/dotfiles/gitconfig.sh
