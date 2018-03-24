@@ -5,6 +5,7 @@ set termencoding=utf8
 syntax enable
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
 set smartindent
@@ -55,8 +56,7 @@ nnoremap <leader>s :mksession<CR>
 augroup configgroup
     autocmd!
     autocmd VimEnter * highlight clear SignColumn
-    autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
-                \:call <SID>StripTrailingWhitespaces()
+    autocmd BufWritePre *.php,*.c,*.cpp,*.h,*.py,*.js,*.txt,*.hs,*.java,*.md :call <SID>StripTrailingWhitespaces()
     autocmd FileType python setlocal commentstring=#\ %s
     autocmd BufEnter *.zsh-theme setlocal filetype=zsh
     autocmd BufEnter Makefile setlocal noexpandtab
@@ -113,17 +113,28 @@ Plugin 'honza/vim-snippets'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'majutsushi/tagbar'
 Plugin 'w0rp/ale'
+Plugin 'ayu-theme/ayu-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+set termguicolors
+let ayucolor="dark"
+colorscheme ayu
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:ale_python_flake8_executable = 'python3'   " or 'python' for Python 2
+let g:ale_python_flake8_options = '-m flake8'
+let g:ale_python_pylint_executable = 'python3'   " or 'python' for Python 2
+let g:ale_python_pylint_use_global = 0
 
 nmap <F3> <Esc>:BufExplorer<cr>
 vmap <F3> <esc>:BufExplorer<cr>
 imap <F3> <esc><esc>:BufExplorer<cr>
 
 nmap <F4> :TagbarToggle<CR>
-cnoremap @ <c-r>=expand("%:h")<cr>/
+set tags=tags;/
+" cnoremap @ <c-r>=expand("%:h")<cr>/
