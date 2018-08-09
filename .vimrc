@@ -1,5 +1,6 @@
 set nocompatible
 set termencoding=utf8
+set clipboard=unnamedplus
 
 " Spaces and tabs
 syntax enable
@@ -8,8 +9,7 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
-set smartindent
-
+set smartindent 
 set nowrap
 set list listchars=tab:→\ ,trail:·
 set textwidth=79
@@ -33,12 +33,21 @@ set mousemodel=popup
 set incsearch
 set hlsearch
 nnoremap <leader><space> :nohlsearch<CR>
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+" Display all matching files when we tab complete
+set wildmenu
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+" Display all matching files when we tab complete
+set wildmenu
 
 " Folding
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
-nnoremap <space> za
 set foldmethod=indent
 
 " Movement
@@ -68,12 +77,15 @@ augroup configgroup
     autocmd BufEnter *.sh setlocal softtabstop=2
 augroup END
 
-" Backup
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
+" Tweaks for browsing
+let g:netrw_banner=0        " disable annoying banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_hide=0          " show all files
+let g:netrw_winsize=25      " 25% split width
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 " toggle between number and relativenumber
 function! ToggleNumber()
@@ -110,17 +122,21 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'jlanzarotta/bufexplorer'
 Plugin 'majutsushi/tagbar'
 Plugin 'w0rp/ale'
-Plugin 'ayu-theme/ayu-vim'
+" Plugin 'ayu-theme/ayu-vim'
+Plugin 'morhetz/gruvbox'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-set termguicolors
-let ayucolor="dark"
-colorscheme ayu
+if filereadable(expand("$HOME/.vim/bundle/gruvbox/colors/gruvbox.vim"))
+    set termguicolors
+    set background=dark
+    " let ayucolor="dark"
+    colorscheme gruvbox
+endif
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -131,10 +147,8 @@ let g:ale_python_flake8_options = '-m flake8'
 let g:ale_python_pylint_executable = 'python3'   " or 'python' for Python 2
 let g:ale_python_pylint_use_global = 0
 
-nmap <F3> <Esc>:BufExplorer<cr>
-vmap <F3> <esc>:BufExplorer<cr>
-imap <F3> <esc><esc>:BufExplorer<cr>
-
 nmap <F4> :TagbarToggle<CR>
+nmap <F3> :Vexplore<CR>
 set tags=tags;/
+command! MakeTags !ctags -R .
 " cnoremap @ <c-r>=expand("%:h")<cr>/
