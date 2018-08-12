@@ -124,9 +124,13 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'w0rp/ale'
-" Plugin 'ayu-theme/ayu-vim'
-Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-surround'
+Plugin 'rust-lang/rust.vim'
+
+" color schemes
+Plugin 'morhetz/gruvbox'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'ayu-theme/ayu-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
