@@ -1,0 +1,99 @@
+Xft.dpi: 140
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+
+URxvt.font: xft:dejavu sans mono:size=8
+URxvt.scrollBar: false
+URxvt.letterSpace: -1
+
+!#include "dotfiles/colors/nord.xresources"
+
+!! perl extensions
+!!URxvt.perl-ext:             default,url-select,clipboard
+URxvt.perl-ext:             default
+
+! url-select (part of urxvt-perls package)
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.url-select.autocopy:  true
+URxvt.url-select.button:    2
+URxvt.url-select.launcher:  chromium
+URxvt.url-select.underline: true
+
+! Nastavuje kopirovani
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+
+! disable the stupid ctrl+shift 'feature'
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+!urxvt color scheme:
+
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
+
+URxvt*colorUL: #86a2b0
+
+! black
+URxvt*color0  : #2E3436
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+URxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #3465A4
+URxvt*color12 : #729FCF
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #06989A
+URxvt*color14 : #34E2E2
+! white
+URxvt*color7  : #D3D7CF
+URxvt*color15 : #EEEEEC
+
+! special
+*.foreground:   #d9d8d8
+*.background:   #231f20
+*.cursorColor:  #d9d8d8
+
+! black
+*.color0:       #231f20
+*.color8:       #737171
+
+! red
+*.color1:       #ee2e24
+*.color9:       #ee2e24
+
+! green
+*.color2:       #00853e
+*.color10:      #00853e
+
+! yellow
+*.color3:       #ffd204
+*.color11:      #ffd204
+
+! blue
+*.color4:       #009ddc
+*.color12:      #009ddc
+
+! magenta
+*.color5:       #98005d
+*.color13:      #98005d
+
+! cyan
+*.color6:       #85cebc
+*.color14:      #85cebc
+
+! white
+*.color7:       #d9d8d8
+*.color15: #ffffff

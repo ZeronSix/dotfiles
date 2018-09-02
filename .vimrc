@@ -1,6 +1,6 @@
 set nocompatible
 set termencoding=utf8
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 " Spaces and tabs
 syntax enable
@@ -136,7 +136,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 if filereadable(expand("$HOME/.vim/bundle/gruvbox/colors/gruvbox.vim"))
-    set termguicolors
+    " set termguicolors
     set background=dark
     " let ayucolor="dark"
     colorscheme gruvbox
