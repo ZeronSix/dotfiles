@@ -95,6 +95,11 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+grave move scratchpad
 bindsym $mod+grave scratchpad show
 
+bindsym $mod+Shift+greater move container to output right
+bindsym $mod+Shift+less move container to output left
+bindsym $mod+greater focus output right
+bindsym $mod+less focus output left
+
 set $workspace1 "1:www"
 set $workspace2 "2:code"
 set $workspace3 "3:work"
